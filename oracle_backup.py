@@ -87,10 +87,10 @@ def main():
 	# print "has get the data"
 	# instrumentid_set = getOneDict(icresult)
 	# print len(instrumentid_set)
-	instrumentid_set = {"zn1711","cu1711"}
+	instrumentid_set = {"ru1805","ru1801"}
 
 	print "start get all the date"
-	mysql="select TRADINGDAY from hyqh.quotatick  where INSTRUMENTID = 'cu1711'"
+	mysql="select TRADINGDAY from hyqh.quotatick  where INSTRUMENTID = 'ru1801'"
 	print mysql
 	cursor.execute (mysql)  
 

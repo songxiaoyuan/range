@@ -152,29 +152,52 @@ class GetRange(object):
 		self._max_lastprice =0
 		self._min_lastprice = 0
 
-def clean_night_data(data):
+def getSortedData(data):
 	ret = []
-	amBegin = 9*3600
-	pmEnd = 15*3600
+	night = []
+	zero = []
+	day = []
+	nightBegin = 21*3600
+	nightEnd = 23*3600+59*60+60
+	zeroBegin = 0
+	zeroEnd = 9*3600 - 100
+	dayBegin = 9*3600
+	dayEnd = 15*3600
 
 	for line in data:
 		# print line
-		timeLine = line[0].split(":")
+		timeLine = line[20].split(":")
 		# print timeLine
-		# tick = line[21]
-		nowTime = int(timeLine[0])*3600+int(timeLine[1])*60+int(timeLine[2])
+		try:
+			nowTime = int(timeLine[0])*3600+int(timeLine[1])*60+int(timeLine[2])
+		except Exception as e:
+			nowTime = 0
 
-		if nowTime>=amBegin and nowTime <=pmEnd:
-			ret.append(line)
+		if nowTime >= zeroBegin and nowTime <zeroEnd:
+			zero.append(line)
+		elif nowTime >= dayBegin and nowTime <= dayEnd:
+			day.append(line)
+		elif nowTime >=nightBegin and nowTime <=nightEnd:
+			night.append(line)
 		# if int(line[22]) ==0 or int(line[4]) ==3629:
 		# 	continue
+	night = sorted(night, key = lambda x: (x[20], int(x[21])))
+	zero = sorted(zero, key = lambda x: (x[20], int(x[21])))
+	day = sorted(day, key = lambda x: (x[20], int(x[21])))
+	for line in night:
+		ret.append(line)
+	for line in zero:
+		ret.append(line)
+	# for line in day:
+	# 	ret.append(line)
+
 	return ret
 
 
 
 def main():
 	total_path = "./data/"
-	instrumentid = "hc"
+	instrumentid = "ru"
 	bt = GetRange(nameDict[instrumentid]["param"])
 	for file in os.listdir(total_path):
 		tmp =  os.path.join(total_path,file)
@@ -186,7 +209,11 @@ def main():
 					file_csv = os.path.join(tmp,file_csv)
 					f = open(file_csv,'rb')
 					reader = csv.reader(f)
+					tmpdata = []
 					for row in reader:
+						tmpdata.append(row)
+					tmpdata = getSortedData(tmpdata)
+					for row in tmpdata:
 						bt.get_md_data(row)
 						# tranfer the string to float
 					bt.get_tick_num()

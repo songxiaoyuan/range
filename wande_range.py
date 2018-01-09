@@ -112,27 +112,23 @@ class GetRange(object):
 	def get_tick_num(self):
 		tick_num = (self._day_max_lastprice - self._day_min_lastprice)/self._tick
 		tmp = int(tick_num/10)
-		if tick_num>=0 and tick_num <10:
-			print self._md_array[0]
-			return  
-		if tmp in self._tick_num_dict_day:
-			self._tick_num_dict_day[tmp] +=1
-		else:
-			self._tick_num_dict_day[tmp] =1
-		self._day_max_lastprice =0
-		self._day_min_lastprice = 0
+		if tick_num>=10:
+			if tmp in self._tick_num_dict_day:
+				self._tick_num_dict_day[tmp] +=1
+			else:
+				self._tick_num_dict_day[tmp] =1
+			self._day_max_lastprice =0
+			self._day_min_lastprice = 0
 
 		tick_num = (self._night_max_lastprice - self._night_min_lastprice)/self._tick
-		if tick_num>=0 and tick_num <10:
-			print self._md_array[0]
-			return  
-		tmp = int(tick_num/10)
-		if tmp in self._tick_num_dict_night:
-			self._tick_num_dict_night[tmp] +=1
-		else:
-			self._tick_num_dict_night[tmp] =1
-		self._night_max_lastprice =0
-		self._night_min_lastprice = 0
+		if tick_num>=10 :
+			tmp = int(tick_num/10)
+			if tmp in self._tick_num_dict_night:
+				self._tick_num_dict_night[tmp] +=1
+			else:
+				self._tick_num_dict_night[tmp] =1
+			self._night_max_lastprice =0
+			self._night_min_lastprice = 0
 
 		tick_num = (self._total_max_lastprice - self._total_min_lastprice)/self._tick
 		tmp = int(tick_num/10)
@@ -145,7 +141,7 @@ class GetRange(object):
 
 
 def main():
-	instrumentid = "zn"
+	instrumentid = "v"
 	path = "./data_wande/"+instrumentid+".xls"
 	print path
 	bt = GetRange(nameDict[instrumentid])

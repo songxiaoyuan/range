@@ -55,24 +55,27 @@ class GetRange(object):
 		self._tick_num_array_total = sorted(self._tick_num_array_total)
 
 		self._file_nums = len(self._tick_num_array_day)
-		avg = sum(self._tick_num_array_day)/self._file_nums
-		print "the day avg is :"+ str(avg)
-		medium = self._tick_num_array_day[self._file_nums/2]
-		print "the day medium is : " + str(medium)
+		if self._file_nums !=0:
+			avg = sum(self._tick_num_array_day)/self._file_nums
+			print "the day avg is :"+ str(avg)
+			medium = self._tick_num_array_day[self._file_nums/2]
+			print "the day medium is : " + str(medium)
 		print "the file num is : "+ str(self._file_nums)
 
 		self._file_nums = len(self._tick_num_array_night)
-		avg = sum(self._tick_num_array_night)/self._file_nums
-		print "the night avg is :"+ str(avg)
-		medium = self._tick_num_array_night[self._file_nums/2]
-		print "the night medium is : " + str(medium)
+		if self._file_nums !=0:
+			avg = sum(self._tick_num_array_night)/self._file_nums
+			print "the night avg is :"+ str(avg)
+			medium = self._tick_num_array_night[self._file_nums/2]
+			print "the night medium is : " + str(medium)
 		print "the file num is : "+ str(self._file_nums)
 
 		self._file_nums = len(self._tick_num_array_total)
-		avg = sum(self._tick_num_array_total)/self._file_nums
-		print "the total avg is :"+ str(avg)
-		medium = self._tick_num_array_total[self._file_nums/2]
-		print "the total medium is : " + str(medium)
+		if self._file_nums !=0:
+			avg = sum(self._tick_num_array_total)/self._file_nums
+			print "the total avg is :"+ str(avg)
+			medium = self._tick_num_array_total[self._file_nums/2]
+			print "the total medium is : " + str(medium)
 		print "the file num is : "+ str(self._file_nums)
 
 		print "has write the config file"
@@ -123,7 +126,7 @@ class GetRange(object):
 			self._total_min_lastprice = 0
 
 def main():
-	instrumentid = "hc"
+	instrumentid = "v"
 	path = "./data_wande/"+instrumentid+".xls"
 	print path
 	bt = GetRange(nameDict[instrumentid])
